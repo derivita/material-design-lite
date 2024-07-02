@@ -87,9 +87,6 @@ componentHandler = (function() {
   /** @type {!Array<componentHandler.ComponentConfig>} */
   var registeredComponents_ = [];
 
-  /** @type {!Array<componentHandler.Component>} */
-  var createdComponents_ = [];
-
   var componentConfigProperty_ = 'mdlComponentConfigInternal_';
 
   /**
@@ -239,7 +236,6 @@ componentHandler = (function() {
         element.setAttribute('data-upgraded', upgradedList.join(','));
         var instance = new registeredClass.classConstructor(element);
         instance[componentConfigProperty_] = registeredClass;
-        createdComponents_.push(instance);
         // Call any callbacks the user has registered with this component type.
         for (var j = 0, m = registeredClass.callbacks.length; j < m; j++) {
           registeredClass.callbacks[j](element);
@@ -361,52 +357,9 @@ componentHandler = (function() {
   }
 
   /**
-   * Check the component for the downgrade method.
-   * Execute if found.
-   * Remove component from createdComponents list.
-   *
-   * @param {?componentHandler.Component} component
+   * fake deconstructor
    */
-  function deconstructComponentInternal(component) {
-    if (component) {
-      var componentIndex = createdComponents_.indexOf(component);
-      createdComponents_.splice(componentIndex, 1);
-
-      var upgrades = component.element_.getAttribute('data-upgraded').split(',');
-      var componentPlace = upgrades.indexOf(component[componentConfigProperty_].classAsString);
-      upgrades.splice(componentPlace, 1);
-      component.element_.setAttribute('data-upgraded', upgrades.join(','));
-
-      var ev = createEvent_('mdl-componentdowngraded', true, false);
-      component.element_.dispatchEvent(ev);
-    }
-  }
-
-  /**
-   * Downgrade either a given node, an array of nodes, or a NodeList.
-   *
-   * @param {!Node|!Array<!Node>|!NodeList} nodes
-   */
-  function downgradeNodesInternal(nodes) {
-    /**
-     * Auxiliary function to downgrade a single node.
-     * @param  {!Node} node the node to be downgraded
-     */
-    var downgradeNode = function(node) {
-      createdComponents_.filter(function(item) {
-        return item.element_ === node;
-      }).forEach(deconstructComponentInternal);
-    };
-    if (nodes instanceof Array || nodes instanceof NodeList) {
-      for (var n = 0; n < nodes.length; n++) {
-        downgradeNode(nodes[n]);
-      }
-    } else if (nodes instanceof Node) {
-      downgradeNode(nodes);
-    } else {
-      throw new Error('Invalid argument provided to downgrade MDL nodes.');
-    }
-  }
+  function fakeDowngradeElements() {}
 
   // Now return the functions that should be made public with their publicly
   // facing names...
@@ -417,7 +370,7 @@ componentHandler = (function() {
     upgradeAllRegistered: upgradeAllRegisteredInternal,
     registerUpgradedCallback: registerUpgradedCallbackInternal,
     register: registerInternal,
-    downgradeElements: downgradeNodesInternal
+    downgradeElements: fakeDowngradeElements,
   };
 })();
 

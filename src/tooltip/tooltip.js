@@ -102,6 +102,8 @@
     }
 
     this.element_.classList.add(this.CssClasses_.IS_ACTIVE);
+    window.addEventListener('scroll', this.boundMouseLeaveAndScrollHandler, true);
+    window.addEventListener('touchstart', this.boundMouseLeaveAndScrollHandler);
   };
 
   /**
@@ -111,6 +113,8 @@
    */
   MaterialTooltip.prototype.hideTooltip_ = function() {
     this.element_.classList.remove(this.CssClasses_.IS_ACTIVE);
+    window.removeEventListener('scroll', this.boundMouseLeaveAndScrollHandler, true);
+    window.removeEventListener('touchstart', this.boundMouseLeaveAndScrollHandler);
   };
 
   /**
@@ -137,8 +141,6 @@
         this.forElement_.addEventListener('mouseenter', this.boundMouseEnterHandler, false);
         this.forElement_.addEventListener('touchend', this.boundMouseEnterHandler, false);
         this.forElement_.addEventListener('mouseleave', this.boundMouseLeaveAndScrollHandler, false);
-        window.addEventListener('scroll', this.boundMouseLeaveAndScrollHandler, true);
-        window.addEventListener('touchstart', this.boundMouseLeaveAndScrollHandler);
       }
     }
   };
