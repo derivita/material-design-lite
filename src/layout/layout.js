@@ -334,15 +334,6 @@
         }
       }
 
-      window.addEventListener('pageshow', function(e) {
-        if (e.persisted) { // when page is loaded from back/forward cache
-          // trigger repaint to let layout scroll in safari
-          this.element_.style.overflowY = 'hidden';
-          requestAnimationFrame(function() {
-            this.element_.style.overflowY = '';
-          }.bind(this));
-        }
-      }.bind(this), false);
 
       if (this.header_) {
         this.tabBar_ = this.header_.querySelector('.' + this.CssClasses_.TAB_BAR);
@@ -502,20 +493,6 @@
 
         this.tabBar_.addEventListener('scroll', tabUpdateHandler);
         tabUpdateHandler();
-
-        // Update tabs when the window resizes.
-        var windowResizeHandler = function() {
-          // Use timeouts to make sure it doesn't happen too often.
-          if (this.resizeTimeoutId_) {
-            clearTimeout(this.resizeTimeoutId_);
-          }
-          this.resizeTimeoutId_ = setTimeout(function() {
-            tabUpdateHandler();
-            this.resizeTimeoutId_ = null;
-          }.bind(this), /** @type {number} */ (this.Constant_.RESIZE_TIMEOUT));
-        }.bind(this);
-
-        window.addEventListener('resize', windowResizeHandler);
 
         if (this.tabBar_.classList.contains(this.CssClasses_.JS_RIPPLE_EFFECT)) {
           this.tabBar_.classList.add(this.CssClasses_.RIPPLE_IGNORE_EVENTS);
