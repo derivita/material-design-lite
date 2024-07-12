@@ -334,7 +334,6 @@
         }
       }
 
-
       if (this.header_) {
         this.tabBar_ = this.header_.querySelector('.' + this.CssClasses_.TAB_BAR);
       }
