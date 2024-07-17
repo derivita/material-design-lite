@@ -129,17 +129,7 @@
 
   };
 
-  /**
-   * Provide local version of matchMedia. This is needed in order to support
-   * monkey-patching of matchMedia in the unit tests. Due to peculiarities in
-   * PhantomJS, it doesn't work to monkey patch window.matchMedia directly.
-   *
-   * @private
-   */
-  MaterialLayout.prototype.matchMedia_ = function(query) {
-    return window.matchMedia(query);
-  };
-
+  window["materialLayoutScreenWidthMediaQuery"] = window.matchMedia(window.MaterialLayout.prototype.Constant_.MAX_WIDTH);
   /**
    * Handles scrolling on the content.
    *
@@ -439,7 +429,7 @@
 
       // Keep an eye on screen size, and add/remove auxiliary class for styling
       // of small screens.
-      this.screenSizeMediaQuery_ = window.matchMedia('(max-width: 1024px)');
+      this.screenSizeMediaQuery_ = window.materialLayoutScreenWidthMediaQuery
       this.screenSizeMediaQuery_.addEventListener('change', screenSizeHandler);
       screenSizeHandler(this.screenSizeMediaQuery_);
 
