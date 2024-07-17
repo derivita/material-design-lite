@@ -191,21 +191,27 @@
    * @private
    */
   MaterialLayout.prototype.screenSizeHandler_ = function() {
-    if (this.screenSizeMediaQuery_.matches) {
-      this.element_.classList.add(this.CssClasses_.IS_SMALL_SCREEN);
-
-      if (this.drawer_) {
-        this.drawer_.setAttribute('aria-hidden', 'true');
-      }
+    // modified to query dependent elements rather than binding materialLayout to windows media query result
+    var materialLayout = window.document.querySelector('.mdl-layout')
+    if (materialLayout){
+      var drawerElement = materialLayout.querySelector('.mdl-layout__drawer');
+      if (window.matchMedia('(max-width: 1024px)').matches) {
+        materialLayout.classList.add('is-small-screen');
+          if (drawerElement) {
+            drawerElement.setAttribute('aria-hidden', 'true');
+          }
     } else {
-      this.element_.classList.remove(this.CssClasses_.IS_SMALL_SCREEN);
-      // Collapse drawer (if any) when moving to a large screen size.
-      if (this.drawer_) {
-        this.drawer_.classList.remove(this.CssClasses_.IS_DRAWER_OPEN);
-        this.obfuscator_.classList.remove(this.CssClasses_.IS_DRAWER_OPEN);
-
-        if (this.element_.classList.contains(this.CssClasses_.FIXED_DRAWER)) {
-          this.drawer_.setAttribute('aria-hidden', 'false');
+        materialLayout.classList.remove('is-small-screen');
+        // Collapse drawer (if any) when moving to a large screen size.
+        if (drawerElement) {
+          drawerElement.classList.remove('is-visible');
+          var obfuscator = window.document.querySelector('mdl-layout__obfuscator')
+          if(obfuscator){
+            obfuscator.classList.remove('is-visible');
+          }
+          if (materialLayout.classList.contains('mdl-layout--fixed-drawer')) {
+              drawerElement.setAttribute('aria-hidden', 'false');
+          }
         }
       }
     }
@@ -433,9 +439,8 @@
 
       // Keep an eye on screen size, and add/remove auxiliary class for styling
       // of small screens.
-      this.screenSizeMediaQuery_ = this.matchMedia_(
-          /** @type {string} */ (this.Constant_.MAX_WIDTH));
-      this.screenSizeMediaQuery_.addListener(this.screenSizeHandler_.bind(this));
+      this.screenSizeMediaQuery_ = window.matchMedia('(max-width: 1024px)');
+      this.screenSizeMediaQuery_.addListener(this.screenSizeHandler_);
       this.screenSizeHandler_();
 
       // Initialize tabs, if any.
