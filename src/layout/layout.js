@@ -190,17 +190,18 @@
    *
    * @private
    */
-  MaterialLayout.prototype.screenSizeHandler_ = function() {
+
+  function screenSizeHandler(e) {
     // modified to query dependent elements rather than binding materialLayout to windows media query result
     var materialLayout = window.document.querySelector('.mdl-layout')
     if (materialLayout){
       var drawerElement = materialLayout.querySelector('.mdl-layout__drawer');
-      if (window.matchMedia('(max-width: 1024px)').matches) {
+      if (e.matches) {
         materialLayout.classList.add('is-small-screen');
-          if (drawerElement) {
+        if (drawerElement) {
             drawerElement.setAttribute('aria-hidden', 'true');
-          }
-    } else {
+        }
+      } else {
         materialLayout.classList.remove('is-small-screen');
         // Collapse drawer (if any) when moving to a large screen size.
         if (drawerElement) {
@@ -216,7 +217,6 @@
       }
     }
   };
-
   /**
    * Handles events of drawer button.
    *
@@ -440,8 +440,8 @@
       // Keep an eye on screen size, and add/remove auxiliary class for styling
       // of small screens.
       this.screenSizeMediaQuery_ = window.matchMedia('(max-width: 1024px)');
-      this.screenSizeMediaQuery_.addListener(this.screenSizeHandler_);
-      this.screenSizeHandler_();
+      this.screenSizeMediaQuery_.addEventListener('change', screenSizeHandler);
+      screenSizeHandler(this.screenSizeMediaQuery_);
 
       // Initialize tabs, if any.
       if (this.header_ && this.tabBar_) {
