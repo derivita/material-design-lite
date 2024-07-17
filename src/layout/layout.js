@@ -181,32 +181,36 @@
    * @private
    */
 
+
   function screenSizeHandler(e) {
     // modified to query dependent elements rather than binding materialLayout to windows media query result
-    var materialLayout = window.document.querySelector('.mdl-layout')
-    if (materialLayout){
-      var drawerElement = materialLayout.querySelector('.mdl-layout__drawer');
-      if (e.matches) {
-        materialLayout.classList.add('is-small-screen');
-        if (drawerElement) {
+    var materialLayouts = window.document.querySelectorAll('.mdl-layout')
+    Array.from(materialLayouts).forEach((layout) => {
+      if (layout) {
+        var drawerElement = layout.querySelector('.mdl-layout__drawer');
+        if (e.matches) {
+          layout.classList.add('is-small-screen');
+          if (drawerElement) {
             drawerElement.setAttribute('aria-hidden', 'true');
-        }
-      } else {
-        materialLayout.classList.remove('is-small-screen');
-        // Collapse drawer (if any) when moving to a large screen size.
-        if (drawerElement) {
-          drawerElement.classList.remove('is-visible');
-          var obfuscator = window.document.querySelector('mdl-layout__obfuscator')
-          if(obfuscator){
-            obfuscator.classList.remove('is-visible');
           }
-          if (materialLayout.classList.contains('mdl-layout--fixed-drawer')) {
+        } else {
+          layout.classList.remove('is-small-screen');
+          // Collapse drawer (if any) when moving to a large screen size.
+          if (drawerElement) {
+            drawerElement.classList.remove('is-visible');
+            var obfuscator = layout.querySelector('mdl-layout__obfuscator')
+            if (obfuscator) {
+              obfuscator.classList.remove('is-visible');
+            }
+            if (layout.classList.contains('mdl-layout--fixed-drawer')) {
               drawerElement.setAttribute('aria-hidden', 'false');
+            }
           }
         }
       }
-    }
+    });
   };
+
   /**
    * Handles events of drawer button.
    *
