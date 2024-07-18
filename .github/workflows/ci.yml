@@ -1,8 +1,8 @@
 name: CI
 on: [pull_request]
 jobs:
-  reviewdog:
-    name: runner / reviewdog
+  tests:
+    name: runner / tests
     runs-on: ubuntu-latest
     permissions:
       contents: read
