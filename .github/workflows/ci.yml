@@ -31,4 +31,4 @@ jobs:
           reporter: github-pr-review
           level: error
           eslint_flags: ${{ steps.changed-files.outputs.all_changed_files }}
-      - run: npm ci
+      - run: npm run ci
