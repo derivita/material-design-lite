@@ -21,12 +21,23 @@
   const MEDIA_QUERY = window.matchMedia('(max-width: 1024px)');
   MEDIA_QUERY.onchange = screenSizeHandler;
 
+  /**
+   * Class constructor for Layout MDL component.
+   * Implements MDL component design pattern defined at:
+   * https://github.com/jasonmayes/mdl-component-design-pattern
+   *
+   * @constructor
+   * @param {HTMLElement} element The element that will be upgraded.
+   */
   var MaterialLayout = function MaterialLayout(element) {
     this.element_ = element;
+
     // Initialize instance.
     this.init();
   };
-  window['MaterialLayout'] = MaterialLayout;  /**
+  window['MaterialLayout'] = MaterialLayout;
+
+  /**
    * Store constants in one place so they can be updated easily.
    *
    * @enum {string | number}
