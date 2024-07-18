@@ -216,7 +216,7 @@ gulp.task('styles-grid', () => {
 gulp.task('closure', () => {
   return gulp.src(SOURCES)
     .pipe(closureCompiler({
-      compilerPath: 'node_modules/google-closure-compiler/compiler.jar',
+      compilerPath: 'node_modules/google-closure-compiler-java/compiler.jar',
       fileName: 'material.closure.min.js',
       compilerFlags: {
         // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
