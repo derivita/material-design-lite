@@ -17,30 +17,22 @@
 (function() {
   'use strict';
 
-  /**
-   * Class constructor for Layout MDL component.
-   * Implements MDL component design pattern defined at:
-   * https://github.com/jasonmayes/mdl-component-design-pattern
-   *
-   * @constructor
-   * @param {HTMLElement} element The element that will be upgraded.
-   */
+  /** @const @private */
+  const MEDIA_QUERY = window.matchMedia('(max-width: 1024px)');
+  MEDIA_QUERY.onchange = screenSizeHandler;
+
   var MaterialLayout = function MaterialLayout(element) {
     this.element_ = element;
-
     // Initialize instance.
     this.init();
   };
-  window['MaterialLayout'] = MaterialLayout;
-
-  /**
+  window['MaterialLayout'] = MaterialLayout;  /**
    * Store constants in one place so they can be updated easily.
    *
    * @enum {string | number}
    * @private
    */
   MaterialLayout.prototype.Constant_ = {
-    MAX_WIDTH: '(max-width: 1024px)',
     TAB_SCROLL_PIXELS: 100,
     RESIZE_TIMEOUT: 100,
 
@@ -129,8 +121,6 @@
 
   };
 
-  /** @const @private */
-  MaterialLayout.screenWidthMediaQuery_ = window.matchMedia(/** @type{string} */(MaterialLayout.prototype.Constant_.MAX_WIDTH));
   /**
    * Handles scrolling on the content.
    *
@@ -182,13 +172,16 @@
    * @private
    */
 
-
   function screenSizeHandler(e) {
     // modified to query dependent elements rather than binding materialLayout to windows media query result
-    var materialLayouts = window.document.querySelectorAll('.mdl-layout')
-    Array.from(materialLayouts).forEach((layout) => {
+    var materialLayouts = document.querySelectorAll('.mdl-layout');
+
+    for (let i = 0; i < materialLayouts.length; i++) {
+      let layout = materialLayouts[i];
+
       if (layout) {
         var drawerElement = layout.querySelector('.mdl-layout__drawer');
+
         if (e.matches) {
           layout.classList.add('is-small-screen');
           if (drawerElement) {
@@ -199,7 +192,7 @@
           // Collapse drawer (if any) when moving to a large screen size.
           if (drawerElement) {
             drawerElement.classList.remove('is-visible');
-            var obfuscator = layout.querySelector('mdl-layout__obfuscator')
+            var obfuscator = layout.querySelector('.mdl-layout__obfuscator'); // corrected selector
             if (obfuscator) {
               obfuscator.classList.remove('is-visible');
             }
@@ -209,9 +202,8 @@
           }
         }
       }
-    });
+    }
   };
-
   /**
    * Handles events of drawer button.
    *
@@ -432,11 +424,7 @@
         this.drawer_.setAttribute('aria-hidden', 'true');
       }
 
-      // Keep an eye on screen size, and add/remove auxiliary class for styling
-      // of small screens.
-      this.screenSizeMediaQuery_ = window.materialLayoutScreenWidthMediaQuery
-      this.screenSizeMediaQuery_.addEventListener('change', screenSizeHandler);
-      screenSizeHandler(this.screenSizeMediaQuery_);
+      screenSizeHandler(MEDIA_QUERY);
 
       // Initialize tabs, if any.
       if (this.header_ && this.tabBar_) {
