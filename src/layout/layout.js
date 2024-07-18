@@ -129,7 +129,8 @@
 
   };
 
-  window["materialLayoutScreenWidthMediaQuery"] = window.matchMedia(window.MaterialLayout.prototype.Constant_.MAX_WIDTH);
+  /** @const @private */
+  MaterialLayout.screenWidthMediaQuery_ = window.matchMedia(/** @type{string} */(MaterialLayout.prototype.Constant_.MAX_WIDTH));
   /**
    * Handles scrolling on the content.
    *
