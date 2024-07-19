@@ -16,11 +16,6 @@
  */
 (function() {
   'use strict';
-
-  /** @private */
-  const MEDIA_QUERY = window.matchMedia('(max-width: 1024px)');
-  MEDIA_QUERY.onchange = screenSizeHandler;
-
   /**
    * Class constructor for Layout MDL component.
    * Implements MDL component design pattern defined at:
@@ -44,6 +39,7 @@
    * @private
    */
   MaterialLayout.prototype.Constant_ = {
+    MAX_WIDTH: '(max-width: 1024px)',
     TAB_SCROLL_PIXELS: 100,
     RESIZE_TIMEOUT: 100,
 
@@ -131,6 +127,23 @@
     ON_SMALL_SCREEN: 'mdl-layout--small-screen-only'
 
   };
+
+  /**
+   * Provide local version of matchMedia. This is needed in order to support
+   * monkey-patching of matchMedia in the unit tests. Due to peculiarities in
+   * PhantomJS, it doesn't work to monkey patch window.matchMedia directly.
+   *
+   * @private
+   */
+  MaterialLayout.prototype.matchMedia_ = function(query) {
+    return window.matchMedia(query);
+  };
+
+  var mediaQuery = MaterialLayout.prototype.matchMedia_(
+    /** @type {string} */ (MaterialLayout.prototype.Constant_.MAX_WIDTH))
+  mediaQuery.onchange = screenSizeHandler;
+
+  MaterialLayout.prototype.screenSizeMediaQuery_ = mediaQuery
 
   /**
    * Handles scrolling on the content.
@@ -434,7 +447,10 @@
         this.drawer_.setAttribute('aria-hidden', 'true');
       }
 
-      screenSizeHandler(MEDIA_QUERY);
+      // Keep an eye on screen size, and add/remove auxiliary class for styling
+      // of small screens.
+
+      screenSizeHandler(this.screenSizeMediaQuery_);
 
       // Initialize tabs, if any.
       if (this.header_ && this.tabBar_) {
