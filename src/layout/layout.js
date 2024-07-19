@@ -187,8 +187,8 @@
     // modified to query dependent elements rather than binding materialLayout to windows media query result
     var materialLayouts = document.querySelectorAll('.mdl-layout');
 
-    for (let i = 0; i < materialLayouts.length; i++) {
-      let layout = materialLayouts[i];
+    for (var i = 0; i < materialLayouts.length; i++) {
+      var layout = materialLayouts[i];
 
       if (layout) {
         var drawerElement = layout.querySelector('.mdl-layout__drawer');
