@@ -140,10 +140,10 @@
   };
 
   var mediaQuery = MaterialLayout.prototype.matchMedia_(
-    /** @type {string} */ (MaterialLayout.prototype.Constant_.MAX_WIDTH))
+    /** @type {string} */ (MaterialLayout.prototype.Constant_.MAX_WIDTH));
   mediaQuery.onchange = screenSizeHandler;
 
-  MaterialLayout.prototype.screenSizeMediaQuery_ = mediaQuery
+  MaterialLayout.prototype.screenSizeMediaQuery_ = mediaQuery;
 
   /**
    * Handles scrolling on the content.
