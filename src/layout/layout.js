@@ -227,7 +227,6 @@
         // prevent scrolling in drawer nav
         evt.preventDefault();
       } else {
-        // prevent other keys2a79247898d1680570c03d8b1cdc5eaf184386372a79247898d1680570c03d8b1cdc5eaf184386372a79247898d1680570c03d8b1cdc5eaf18438637
         return;
       }
     }
