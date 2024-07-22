@@ -135,11 +135,11 @@
    *
    * @private
    */
-  MaterialLayout.prototype.matchMedia_ = function(query) {
+  MaterialLayout.matchMedia_ = function(query) {
     return window.matchMedia(query);
   };
 
-  MaterialLayout.screenSizeMediaQuery_ = MaterialLayout.prototype.matchMedia_(
+  MaterialLayout.screenSizeMediaQuery_ = MaterialLayout.matchMedia_(
     /** @type {string} */ (MaterialLayout.prototype.Constant_.MAX_WIDTH));
   MaterialLayout.screenSizeMediaQuery_.onchange = screenSizeHandler;
 
@@ -189,15 +189,10 @@
   };
 
   /**
-   * @typedef {Object} Matchable
-   * @property {boolean} matches - Indicates if the media query condition is met.
-   */
-
-  /**
    * Handles screen size changes by updating the layout and drawer elements
    * based on the media query change event status.
    *
-   * @param {Matchable} m - is any object that provides matches
+   * @param {!MediaQueryList|!MediaQueryListEvent} m - is any object that provides matches
    *
    */
   function screenSizeHandler(m) {
