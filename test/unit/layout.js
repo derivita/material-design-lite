@@ -135,9 +135,8 @@ describe('MaterialLayout', function () {
     var navLink;
 
     beforeEach(function() {
-      this.originalMatchMedia = window.MaterialLayout.prototype.matchMedia_;
-      window.MaterialLayout.prototype.matchMedia_ = MockMediaQueryList.mockMatchMedia;
-      window.patched = 'yes patched';
+      this.originalMatchMedia = MaterialLayout.matchMedia_;
+      MaterialLayout.matchMedia_ = MockMediaQueryList.mockMatchMedia;
 
       el = document.createElement('div');
       el.innerHTML = '<div class="mdl-layout__header"></div>' +
@@ -161,7 +160,7 @@ describe('MaterialLayout', function () {
     });
 
     afterEach(function() {
-      window.MaterialLayout.prototype.matchMedia_ = this.originalMatchMedia;
+      MaterialLayoutmatchMedia_ = this.originalMatchMedia;
     });
 
     it('should have attribute aria-hidden="true"', function () {
