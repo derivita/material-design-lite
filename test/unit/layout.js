@@ -22,6 +22,10 @@ describe('MaterialLayout', function () {
   }
 
   MockMediaQueryList.registry = {};
+  if(window.MaterialLayout.prototype.screenSizeMediaQuery_){
+    var query = window.MaterialLayout.prototype.Constant_.MAX_WIDTH
+    MockMediaQueryList.registry[query] = new MockMediaQueryList(query)
+  }
 
   MockMediaQueryList.mockMatchMedia = function(query) {
     if (! MockMediaQueryList.registry.hasOwnProperty(query)) {
