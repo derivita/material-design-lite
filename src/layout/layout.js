@@ -139,11 +139,9 @@
     return window.matchMedia(query);
   };
 
-  var mediaQuery = MaterialLayout.prototype.matchMedia_(
+  MaterialLayout.screenSizeMediaQuery_ = MaterialLayout.prototype.matchMedia_(
     /** @type {string} */ (MaterialLayout.prototype.Constant_.MAX_WIDTH));
-  mediaQuery.onchange = screenSizeHandler;
-
-  MaterialLayout.prototype.screenSizeMediaQuery_ = mediaQuery;
+  MaterialLayout.screenSizeMediaQuery_.onchange = screenSizeHandler;
 
   /**
    * Handles scrolling on the content.
@@ -191,12 +189,18 @@
   };
 
   /**
-   * Handles changes in screen size.
-   *
-   * @private
+   * @typedef {Object} Matchable
+   * @property {boolean} matches - Indicates if the media query condition is met.
    */
 
-  function screenSizeHandler(e) {
+  /**
+   * Handles screen size changes by updating the layout and drawer elements
+   * based on the media query change event status.
+   *
+   * @param {Matchable} m - is any object that provides matches
+   *
+   */
+  function screenSizeHandler(m) {
     // modified to query dependent elements rather than binding materialLayout to windows media query result
     var materialLayouts = document.querySelectorAll('.mdl-layout');
 
@@ -206,7 +210,7 @@
       if (layout) {
         var drawerElement = layout.querySelector('.mdl-layout__drawer');
 
-        if (e.matches) {
+        if (m.matches) {
           layout.classList.add('is-small-screen');
           if (drawerElement) {
             drawerElement.setAttribute('aria-hidden', 'true');
@@ -450,7 +454,7 @@
       // Keep an eye on screen size, and add/remove auxiliary class for styling
       // of small screens.
 
-      screenSizeHandler(this.screenSizeMediaQuery_);
+      screenSizeHandler(MaterialLayout.screenSizeMediaQuery_);
 
       // Initialize tabs, if any.
       if (this.header_ && this.tabBar_) {

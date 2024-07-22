@@ -22,7 +22,7 @@ describe('MaterialLayout', function () {
   }
 
   MockMediaQueryList.registry = {};
-  if(window.MaterialLayout.prototype.screenSizeMediaQuery_){
+  if(MaterialLayout.screenSizeMediaQuery_){
     var query = window.MaterialLayout.prototype.Constant_.MAX_WIDTH
     MockMediaQueryList.registry[query] = new MockMediaQueryList(query)
   }
