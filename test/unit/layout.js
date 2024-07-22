@@ -160,7 +160,7 @@ describe('MaterialLayout', function () {
     });
 
     afterEach(function() {
-      MaterialLayoutmatchMedia_ = this.originalMatchMedia;
+      MaterialLayout.matchMedia_ = this.originalMatchMedia;
     });
 
     it('should have attribute aria-hidden="true"', function () {
