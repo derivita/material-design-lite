@@ -16,7 +16,6 @@
  */
 (function() {
   'use strict';
-
   /**
    * Class constructor for Layout MDL component.
    * Implements MDL component design pattern defined at:
@@ -136,9 +135,13 @@
    *
    * @private
    */
-  MaterialLayout.prototype.matchMedia_ = function(query) {
+  MaterialLayout.matchMedia_ = function(query) {
     return window.matchMedia(query);
   };
+
+  MaterialLayout.screenSizeMediaQuery_ = MaterialLayout.matchMedia_(
+    /** @type {string} */ (MaterialLayout.prototype.Constant_.MAX_WIDTH));
+  MaterialLayout.screenSizeMediaQuery_.onchange = screenSizeHandler;
 
   /**
    * Handles scrolling on the content.
@@ -186,31 +189,44 @@
   };
 
   /**
-   * Handles changes in screen size.
+   * Handles screen size changes by updating the layout and drawer elements
+   * based on the media query change event status.
    *
-   * @private
+   * @param {!MediaQueryList|!MediaQueryListEvent} m - is any object that provides matches
+   *
    */
-  MaterialLayout.prototype.screenSizeHandler_ = function() {
-    if (this.screenSizeMediaQuery_.matches) {
-      this.element_.classList.add(this.CssClasses_.IS_SMALL_SCREEN);
+  function screenSizeHandler(m) {
+    // modified to query dependent elements rather than binding materialLayout to windows media query result
+    var materialLayouts = document.querySelectorAll('.mdl-layout');
 
-      if (this.drawer_) {
-        this.drawer_.setAttribute('aria-hidden', 'true');
-      }
-    } else {
-      this.element_.classList.remove(this.CssClasses_.IS_SMALL_SCREEN);
-      // Collapse drawer (if any) when moving to a large screen size.
-      if (this.drawer_) {
-        this.drawer_.classList.remove(this.CssClasses_.IS_DRAWER_OPEN);
-        this.obfuscator_.classList.remove(this.CssClasses_.IS_DRAWER_OPEN);
+    for (var i = 0; i < materialLayouts.length; i++) {
+      var layout = materialLayouts[i];
 
-        if (this.element_.classList.contains(this.CssClasses_.FIXED_DRAWER)) {
-          this.drawer_.setAttribute('aria-hidden', 'false');
+      if (layout) {
+        var drawerElement = layout.querySelector('.mdl-layout__drawer');
+
+        if (m.matches) {
+          layout.classList.add('is-small-screen');
+          if (drawerElement) {
+            drawerElement.setAttribute('aria-hidden', 'true');
+          }
+        } else {
+          layout.classList.remove('is-small-screen');
+          // Collapse drawer (if any) when moving to a large screen size.
+          if (drawerElement) {
+            drawerElement.classList.remove('is-visible');
+            var obfuscator = layout.querySelector('.mdl-layout__obfuscator'); // corrected selector
+            if (obfuscator) {
+              obfuscator.classList.remove('is-visible');
+            }
+            if (layout.classList.contains('mdl-layout--fixed-drawer')) {
+              drawerElement.setAttribute('aria-hidden', 'false');
+            }
+          }
         }
       }
     }
-  };
-
+  }
   /**
    * Handles events of drawer button.
    *
@@ -223,7 +239,6 @@
         // prevent scrolling in drawer nav
         evt.preventDefault();
       } else {
-        // prevent other keys
         return;
       }
     }
@@ -433,10 +448,8 @@
 
       // Keep an eye on screen size, and add/remove auxiliary class for styling
       // of small screens.
-      this.screenSizeMediaQuery_ = this.matchMedia_(
-          /** @type {string} */ (this.Constant_.MAX_WIDTH));
-      this.screenSizeMediaQuery_.addListener(this.screenSizeHandler_.bind(this));
-      this.screenSizeHandler_();
+
+      screenSizeHandler(MaterialLayout.screenSizeMediaQuery_);
 
       // Initialize tabs, if any.
       if (this.header_ && this.tabBar_) {
