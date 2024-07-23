@@ -2,9 +2,6 @@ name: CI
 on:
   pull_request:
   merge_group:
-  push:
-    branches:
-      - mdl-1.x
 
 jobs:
   tests:
