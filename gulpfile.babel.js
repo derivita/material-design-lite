@@ -34,10 +34,15 @@ import swig from 'swig';
 import gulp from 'gulp';
 import closureCompiler from 'gulp-closure-compiler';
 import gulpLoadPlugins from 'gulp-load-plugins';
+import gulpSass from 'gulp-sass';
+import dartSass from 'sass';
 import uniffe from './utils/uniffe.js';
 import pkg from './package.json';
 
 const $ = gulpLoadPlugins();
+// gulp-sass v5+ no longer ships a default Sass compiler — wire one up
+// explicitly so $.sass (auto-loaded by gulp-load-plugins) works.
+$.sass = gulpSass(dartSass);
 const reload = browserSync.reload;
 const hostedLibsUrlPrefix = 'https://code.getmdl.io';
 const templateArchivePrefix = 'mdl-template-';
