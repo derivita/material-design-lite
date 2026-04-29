@@ -74,5 +74,9 @@
     "presets": [
       "es2015"
     ]
+  },
+  "overrides": {
+    "graceful-fs": "^4.2.11",
+    "natives": "npm:@nolyfill/natives@^1.0.42"
   }
 }

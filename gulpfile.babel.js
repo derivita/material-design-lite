@@ -39,10 +39,15 @@ import dartSass from 'sass';
 import uniffe from './utils/uniffe.js';
 import pkg from './package.json';
 
-const $ = gulpLoadPlugins();
-// gulp-sass v5+ no longer ships a default Sass compiler — wire one up
-// explicitly so $.sass (auto-loaded by gulp-load-plugins) works.
-$.sass = gulpSass(dartSass);
+// gulp-sass v5+ no longer ships a default Sass compiler. Wire dart-sass in
+// directly here so the rest of the gulpfile can keep using `sass(...)`.
+const sass = gulpSass(dartSass);
+
+const $ = gulpLoadPlugins({
+  // gulp-load-plugins exposes auto-loaded plugins as lazy getters; gulp-sass
+  // is loaded manually above, so don't let it auto-pattern-match.
+  rename: {'gulp-sass': null}
+});
 const reload = browserSync.reload;
 const hostedLibsUrlPrefix = 'https://code.getmdl.io';
 const templateArchivePrefix = 'mdl-template-';
@@ -133,7 +138,7 @@ gulp.task('images', () => {
 // Compile and Automatically Prefix Stylesheets (dev)
 gulp.task('styles:dev', () => {
   return gulp.src('src/**/*.scss')
-    .pipe($.sass({
+    .pipe(sass({
       precision: 10,
       onError: console.error.bind(console, 'Sass error:')
     }))
@@ -151,7 +156,7 @@ gulp.task('styletemplates', () => {
   return gulp.src('src/template.scss')
     // Generate Source Maps
     .pipe($.sourcemaps.init())
-    .pipe($.sass({
+    .pipe(sass({
       precision: 10,
       onError: console.error.bind(console, 'Sass error:')
     }))
@@ -176,7 +181,7 @@ gulp.task('styles', () => {
   return gulp.src('src/material-design-lite.scss')
     // Generate Source Maps
     .pipe($.sourcemaps.init())
-    .pipe($.sass({
+    .pipe(sass({
       precision: 10,
       onError: console.error.bind(console, 'Sass error:')
     }))
@@ -199,7 +204,7 @@ gulp.task('styles', () => {
 // Only generate CSS styles for the MDL grid
 gulp.task('styles-grid', () => {
   return gulp.src('src/material-design-lite-grid.scss')
-    .pipe($.sass({
+    .pipe(sass({
       precision: 10,
       onError: console.error.bind(console, 'Sass error:')
     }))
@@ -386,7 +391,7 @@ gulp.task('demoresources', () => {
       'src/**/demo.css',
       'src/**/demo.js'
     ], {base: 'src'})
-    .pipe($.if('*.scss', $.sass({
+    .pipe($.if('*.scss', sass({
       precision: 10,
       onError: console.error.bind(console, 'Sass error:')
     })))
