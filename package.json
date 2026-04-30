@@ -58,6 +58,7 @@
     "mocha": "^3.0.2",
     "prismjs": "0.0.1",
     "run-sequence": "^1.0.2",
+    "sass": "^1.99.0",
     "swig": "^1.4.2",
     "through2": "^2.0.0",
     "vinyl-paths": "^2.0.0"
@@ -73,5 +74,9 @@
     "presets": [
       "es2015"
     ]
+  },
+  "overrides": {
+    "graceful-fs": "^4.2.11",
+    "natives": "npm:@nolyfill/natives@^1.0.42"
   }
 }
