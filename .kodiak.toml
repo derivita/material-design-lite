@@ -14,10 +14,10 @@ blocking_labels = ["wip", "do-not-merge"]
 # just by attaching it.
 #
 # dependabot-automerge is only *intended* to be applied by
-# dependabot-automerge-label.yml, after its own ecosystem check and Dependabot-authorship
-# verification confirm the PR is a legitimate Dependabot bump (any
-# update type -- patch, minor, or major; the semver check was removed
-# in shared-workflows#64) — never by
+# dependabot-automerge-label.yml, after its own ecosystem check and
+# Dependabot-authorship verification confirm the PR is a legitimate
+# Dependabot bump (any update type -- patch, minor, or major; the semver
+# check was removed in shared-workflows#64) — never by
 # hand. GitHub doesn't restrict which repo collaborators can attach an
 # *existing* label, and Kodiak's evaluation here only checks label
 # presence, not who added it or the PR's author, so anyone with
