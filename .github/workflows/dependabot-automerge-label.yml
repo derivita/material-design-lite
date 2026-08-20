@@ -1,6 +1,6 @@
 name: Dependabot Auto-merge Label
 
-# Labels Dependabot's own patch/minor npm bumps `automerge` +
+# Labels Dependabot's own npm bumps `automerge` +
 # `dependabot-automerge` so Kodiak can auto-approve and merge them. See
 # derivita/shared-workflows's dependabot-automerge-label.yml (the reusable
 # workflow this calls) for the full security rationale, and
