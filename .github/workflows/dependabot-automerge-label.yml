@@ -1,6 +1,6 @@
 name: Dependabot Auto-merge Label
 
-# Labels Dependabot's own patch/minor npm bumps `automerge` +
+# Labels Dependabot's own npm bumps `automerge` +
 # `dependabot-automerge` so Kodiak can auto-approve and merge them. See
 # derivita/shared-workflows's dependabot-automerge-label.yml (the reusable
 # workflow this calls) for the full security rationale, and
@@ -24,7 +24,7 @@ jobs:
     # Pinned to the v1 tag's commit, not the mutable tag itself — this
     # workflow controls what gets auto-approved, and anyone with write
     # access to shared-workflows can retarget a tag with no PR in this repo.
-    uses: derivita/shared-workflows/.github/workflows/dependabot-automerge-label.yml@9752b04e2e27d6cbc6a06908345e85db2b576abf # v1
+    uses: derivita/shared-workflows/.github/workflows/dependabot-automerge-label.yml@25a5b12a3d6192f3aa09e3ee56f35aaa365ea73e # v1
     with:
       # fetch-metadata's package-ecosystem slug for npm/pnpm, not
       # dependabot.yml's "npm" value — see the callee's own comment on
