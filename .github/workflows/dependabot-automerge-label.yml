@@ -29,4 +29,4 @@ jobs:
       # fetch-metadata's package-ecosystem slug for npm/pnpm, not
       # dependabot.yml's "npm" value — see the callee's own comment on
       # this naming split.
-      ecosystems: npm_and_yarn
+      ecosystems: npm_and_yarn,github_actions
