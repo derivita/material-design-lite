@@ -1,0 +1,29 @@
+# Kodiak's merge-queue config -- an unreviewed edit here could weaken or
+# disable branch-protection-equivalent merge gating (e.g. the automerge
+# label, blocking labels, or merge method).
+/.kodiak.toml @derivita/technical-leadership-council
+
+# This file decides what gets labeled `dependabot-automerge` (and
+# therefore auto-approved), including the ecosystem allow-list -- an
+# unreviewed edit could widen `ecosystems` to cover something not vetted
+# for auto-merge.
+/.github/workflows/dependabot-automerge-label.yml @derivita/technical-leadership-council
+
+# Defines this repo's required status check ("runner / tests") -- the
+# actual safety net once a PR is in Kodiak's scope. An unreviewed edit
+# could weaken or remove it without anyone noticing.
+/.github/workflows/ci.yml @derivita/technical-leadership-council
+
+# CODEOWNERS must own itself -- otherwise any entry above can be deleted
+# in an ordinary, unreviewed PR.
+/.github/CODEOWNERS @derivita/technical-leadership-council
+
+# NOTE: /.github/ is NOT owned wholesale (beyond the gate files above),
+# unlike derivita/infrastructure's CODEOWNERS (which owns all of /.github/
+# and therefore excludes github-actions from Kodiak auto-merge entirely).
+# This repo's workflows are CI/build-only -- no deploy step, no secrets
+# beyond GITHUB_TOKEN -- so owning all of /.github/ would only add
+# friction to routine Actions-version bumps with no corresponding safety
+# benefit. Mirrors derivita/shared-workflows' own CODEOWNERS pattern; see
+# derivita/infrastructure#1719 for the fleet-wide risk audit this is
+# based on.
