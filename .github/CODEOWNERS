@@ -3,10 +3,10 @@
 # label, blocking labels, or merge method).
 /.kodiak.toml @derivita/technical-leadership-council
 
-# This file decides what gets labeled `dependabot-automerge` (and
-# therefore auto-approved), including the ecosystem allow-list -- an
-# unreviewed edit could widen `ecosystems` to cover something not vetted
-# for auto-merge.
+# This file decides which Dependabot PRs get labeled `automerge` and so
+# queued for merge, including the ecosystem allow-list -- an unreviewed
+# edit could widen `ecosystems` to cover something not vetted for
+# auto-merge.
 /.github/workflows/dependabot-automerge-label.yml @derivita/technical-leadership-council
 
 # Defines this repo's required status check ("runner / tests") -- the
