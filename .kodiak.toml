@@ -14,8 +14,10 @@ blocking_labels = ["wip", "do-not-merge"]
 # This approves every Dependabot PR, including ecosystems
 # dependabot-automerge-label.yml doesn't label; only `automerge` queues a
 # merge. The org ruleset "Protect Dependabot branches" keeps everyone but
-# Dependabot and Kodiak from pushing to those branches. Accepted residual:
-# anyone who can add `automerge` (Triage access) can land a Dependabot bump
-# the workflow didn't queue, on Kodiak's approval alone, outside CODEOWNERS
-# paths.
+# Dependabot (its only bypass actor) from pushing to those branches; it's
+# set in org settings, not Terraform:
+# https://github.com/derivita/material-design-lite/rules/25909789
+# Accepted residual: anyone who can add `automerge` (Triage access) can land
+# a Dependabot bump the workflow didn't queue, on Kodiak's approval alone,
+# outside CODEOWNERS paths.
 auto_approve_usernames = ["dependabot"]
