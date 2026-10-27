@@ -12,13 +12,10 @@ blocking_labels = ["wip", "do-not-merge"]
 # wants the login without the [bot] suffix.
 #
 # This approves every Dependabot PR, including ecosystems
-# dependabot-automerge-label.yml doesn't label, and re-approves after
-# anyone pushes to a Dependabot branch. Only `automerge` queues a merge,
-# and that workflow strips it on a push by anyone but Dependabot or Kodiak.
-# Accepted residual: Kodiak approves these PRs even when the workflow
-# doesn't queue them, so anyone who can add `automerge` (Triage access)
-# lands one on Kodiak's approval alone, outside CODEOWNERS paths. That covers
-# a PR the workflow didn't queue (Dependabot's own bump, unreviewed) and,
-# worse, one whose label was stripped after someone else pushed to it:
-# re-adding `automerge` lands that person's commits with no human review.
+# dependabot-automerge-label.yml doesn't label; only `automerge` queues a
+# merge. The org ruleset "Protect Dependabot branches" keeps everyone but
+# Dependabot and Kodiak from pushing to those branches. Accepted residual:
+# anyone who can add `automerge` (Triage access) can land a Dependabot bump
+# the workflow didn't queue, on Kodiak's approval alone, outside CODEOWNERS
+# paths.
 auto_approve_usernames = ["dependabot"]
